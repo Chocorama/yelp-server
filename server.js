@@ -4,16 +4,10 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
-app.use((req, res, next) => {
-  res.status(404).json({
-    status: "fail",
-  });
-  next();
-});
+app.use(express.json());
 
 // get all restaurants
 app.get("/api/v1/restaurants", (req, res) => {
-  console.log("route handler ran");
   res.status(200).json({
     status: "success",
     data: {
@@ -24,18 +18,19 @@ app.get("/api/v1/restaurants", (req, res) => {
 
 // get a restaurant
 // params: { id: '1234' }
-app.get("/api/v1/restaurants/:restaurantid", (req, res) => {
+app.get("/api/v1/restaurants/:id", (req, res) => {
   const {
-    params: { restaurantid },
+    params: { id },
   } = req;
-
-  console.log(req);
 });
 
 // create a restaurant
 app.post("/api/v1/restaurants", (req, res) => {
-  console.log(Object.keys(req));
+  console.log(req.body);
 });
+
+// create restaurants
+app.put("/api/v1/restaurants/:id", () => {});
 
 const port = process.env.PORT || 3000;
 
