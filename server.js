@@ -90,14 +90,28 @@ app.put("/api/v1/restaurants/:id", async (req, res) => {
   }
 });
 
-app.delete("/api/v1/restaurants/:id", (req, res) => {
+app.delete("/api/v1/restaurants/:id", async (req, res) => {
+  const text = "DELETE FROM restaurants WHERE id = $1";
+  const values = [req.params.id];
+
+  try {
+    const result = await db.query("SELECT * FROM restaurants WHERE id = $1", [
+      req.params.id,
+    ]);
+
+    await db.query(text, values);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        restaurant: result.rows[0],
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
   console.log(req.params.id);
-  res.status(200).json({
-    status: "success",
-    data: {
-      restaurant: "Mcdonalds",
-    },
-  });
 });
 
 const port = process.env.PORT || 3000;
