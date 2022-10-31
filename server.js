@@ -68,16 +68,26 @@ app.post("/api/v1/restaurants", async (req, res) => {
 });
 
 // create restaurants
-app.put("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params.id);
-  console.log(req.body);
+app.put("/api/v1/restaurants/:id", async (req, res) => {
+  const { name, location, price_range } = req.body;
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      restaurant: "Mcdonalds",
-    },
-  });
+  const text =
+    "UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 returning *";
+  const values = [name, location, price_range, req.params.id];
+
+  try {
+    const results = await db.query(text, values);
+
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        restaurant: results.rows[0],
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.delete("/api/v1/restaurants/:id", (req, res) => {
