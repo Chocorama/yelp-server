@@ -117,5 +117,5 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Server is up and listening on http://localhost${port}`);
+  console.log(`Server is up and listening on http://localhost:${port}`);
 });
