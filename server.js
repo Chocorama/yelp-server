@@ -28,6 +28,8 @@ app.get("/api/v1/restaurants", async (req, res) => {
 
 // get a restaurant
 app.get("/api/v1/restaurants/:id", async (req, res) => {
+  // id = $1 we want to prevent using template strings for safety so we pass an array
+  // $1 represents first item in array
 
   const text = {
     restaurant: "SELECT * FROM restaurants WHERE id = $1",
