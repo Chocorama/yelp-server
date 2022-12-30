@@ -77,7 +77,7 @@ app.post("/api/v1/restaurants", async (req, res) => {
   }
 });
 
-// create restaurants
+// update restaurants
 app.put("/api/v1/restaurants/:id", async (req, res) => {
   const { name, location, price_range } = req.body;
 
