@@ -33,7 +33,7 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
 
   const text = {
     restaurant: "SELECT * FROM restaurants WHERE id = $1",
-    review: "SELECT * FROM reviews WHERE id = $1",
+    review: "SELECT * FROM reviews WHERE restaurant_id = $1",
   };
   const values = [req.params.id];
 
