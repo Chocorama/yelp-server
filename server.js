@@ -4,7 +4,7 @@ const cors = require("cors");
 const db = require("./db");
 
 const app = express();
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 app.use(cors());
 app.use(express.json());
@@ -124,7 +124,7 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
   console.log(req.params.id);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 
 app.listen(port, () => {
   console.log(`Server is up and listening on http://localhost:${port}`);
