@@ -127,11 +127,11 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
 
 //add a review
 app.post("/api/v1/restaurants/:id/add-review", async (req, res) => {
-  const { name, review, rating } = req.body;
+  const { name, reviewText, rating } = req.body;
 
   const text =
     "INSERT INTO reviews (name, review, rating, restaurant_id) VALUES ($1, $2, $3, $4) returning *";
-  const values = [name, review, rating, req.params.id];
+  const values = [name, reviewText, rating, req.params.id];
 
   try {
     const response = await db.query(text, values);
