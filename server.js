@@ -42,7 +42,16 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
   // $1 represents first item in array
 
   const text = {
-    restaurant: "SELECT * FROM restaurants WHERE id = $1",
+    restaurant: `SELECT *
+    FROM RESTAURANTS
+    LEFT JOIN
+      (SELECT RESTAURANT_ID,
+          COUNT(ID),
+          TRUNC(AVG(RATING),
+            1) AS AVERAGE_RATING
+        FROM REVIEWS
+        GROUP BY RESTAURANT_ID) REVIEWS ON RESTAURANTS.ID = REVIEWS.RESTAURANT_ID
+    WHERE RESTAURANTS.ID = $1;`,
     review: "SELECT * FROM reviews WHERE restaurant_id = $1",
   };
   const values = [req.params.id];
